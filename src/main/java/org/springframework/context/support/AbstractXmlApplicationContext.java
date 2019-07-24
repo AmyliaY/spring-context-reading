@@ -107,7 +107,6 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 
 	//用传进来的XmlBeanDefinitionReader读取器加载Xml文件中的BeanDefinition
 	protected void loadBeanDefinitions(XmlBeanDefinitionReader reader) throws BeansException, IOException {
-		
 		/**
 		 * ClassPathXmlApplicationContext与FileSystemXmlApplicationContext
 		 * 在这里的调用出现分歧，各自按不同的方式加载解析Resource资源
