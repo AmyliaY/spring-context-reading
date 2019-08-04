@@ -479,7 +479,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				//为事件传播器注册事件监听器.
 				registerListeners();
 
-				//初始化Bean，并对lazy-init属性进行处理
+				/**
+				 * ！！！！！！！！！！！！！！！！！！！！！
+				 * 初始化Bean，并对lazy-init属性进行处理
+				 * ！！！！！！！！！！！！！！！！！！！！！
+				 */
 				finishBeanFactoryInitialization(beanFactory);
 
 				//初始化容器的生命周期事件处理器，并发布容器的生命周期事件
@@ -905,10 +909,6 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		getApplicationEventMulticaster().addApplicationListener(listener);
 	}
 
-	/**
-	 * Finish the initialization of this context's bean factory,
-	 * initializing all remaining singleton beans.
-	 */
 	//对配置了lazy-init属性的Bean进行预实例化处理 
 	protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
 		//这是Spring3以后新加的代码，为容器指定一个转换服务(ConversionService)  
