@@ -916,6 +916,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		if (beanFactory.containsBean(CONVERSION_SERVICE_BEAN_NAME) &&
 				beanFactory.isTypeMatch(CONVERSION_SERVICE_BEAN_NAME, ConversionService.class)) {
 			beanFactory.setConversionService(
+					/**
+					 * ！！！！！！！！！！！！！！！！！！！！
+					 * 在这里调用了getBean()方法，触发依赖注入
+					 * ！！！！！！！！！！！！！！！！！！！！
+					 */
 					beanFactory.getBean(CONVERSION_SERVICE_BEAN_NAME, ConversionService.class));
 		}
 
