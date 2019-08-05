@@ -553,12 +553,12 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * 为容器配置ClassLoader、PropertyEditor、BeanPostProcessor等，为容器的启动做好必要的准备
 	 */
 	protected void prepareBeanFactory(ConfigurableListableBeanFactory beanFactory) {
-		// Tell the internal bean factory to use the context's class loader etc.
+		//告诉内部bean工厂使用上下文的类加载器
 		beanFactory.setBeanClassLoader(getClassLoader());
 		beanFactory.setBeanExpressionResolver(new StandardBeanExpressionResolver());
 		beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
 
-		// Configure the bean factory with context callbacks.
+		//使用上下文回调配置bean工厂
 		beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
 		beanFactory.ignoreDependencyInterface(ResourceLoaderAware.class);
 		beanFactory.ignoreDependencyInterface(ApplicationEventPublisherAware.class);
@@ -566,21 +566,20 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		beanFactory.ignoreDependencyInterface(ApplicationContextAware.class);
 		beanFactory.ignoreDependencyInterface(EnvironmentAware.class);
 
-		// BeanFactory interface not registered as resolvable type in a plain factory.
-		// MessageSource registered (and found for autowiring) as a bean.
+		//BeanFactory接口未在普通工厂中注册为可解析类型，MessageSource注册（并为自动连接找到）为bean
 		beanFactory.registerResolvableDependency(BeanFactory.class, beanFactory);
 		beanFactory.registerResolvableDependency(ResourceLoader.class, this);
 		beanFactory.registerResolvableDependency(ApplicationEventPublisher.class, this);
 		beanFactory.registerResolvableDependency(ApplicationContext.class, this);
 
-		// Detect a LoadTimeWeaver and prepare for weaving, if found.
+		//检测LoadTimeWeaver并准备编织，如果能找到
 		if (beanFactory.containsBean(LOAD_TIME_WEAVER_BEAN_NAME)) {
 			beanFactory.addBeanPostProcessor(new LoadTimeWeaverAwareProcessor(beanFactory));
 			// Set a temporary ClassLoader for type matching.
 			beanFactory.setTempClassLoader(new ContextTypeMatchClassLoader(beanFactory.getBeanClassLoader()));
 		}
 
-		// Register default environment beans.
+		//注册默认环境bean
 		if (!beanFactory.containsLocalBean(ENVIRONMENT_BEAN_NAME)) {
 			beanFactory.registerSingleton(ENVIRONMENT_BEAN_NAME, getEnvironment());
 		}
@@ -1046,14 +1045,14 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			LiveBeansView.unregisterApplicationContext(this);
 
 			try {
-				// Publish shutdown event.
+				//发布关闭事件
 				publishEvent(new ContextClosedEvent(this));
 			}
 			catch (Throwable ex) {
 				logger.warn("Exception thrown from ApplicationListener handling ContextClosedEvent", ex);
 			}
 
-			// Stop all Lifecycle beans, to avoid delays during individual destruction.
+			//停止所有生命周期bean，以避免在单个销毁过程中出现延迟
 			try {
 				getLifecycleProcessor().onClose();
 			}
@@ -1063,10 +1062,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 			destroyBeans();
 
-			// Close the state of this context itself.
+			//关闭此上下文本身的状态
 			closeBeanFactory();
 
-			// Let subclasses do some final clean-up if they wish...
+			//如果子类愿意，让它们做一些最后的清理
 			onClose();
 
 			synchronized (this.activeMonitor) {
