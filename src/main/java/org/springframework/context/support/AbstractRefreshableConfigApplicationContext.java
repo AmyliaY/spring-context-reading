@@ -39,6 +39,8 @@ import org.springframework.util.StringUtils;
 public abstract class AbstractRefreshableConfigApplicationContext extends AbstractRefreshableApplicationContext
 		implements BeanNameAware, InitializingBean {
 
+	/** 实例化FileSystemXmlApplicationContext时，完成了赋值，
+	 *  loadBeanDefinitions时进行了获取 */
 	private String[] configLocations;
 
 	private boolean setIdCalled = false;

@@ -440,14 +440,14 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 	/**
 	 * 容器初始化的过程：BeanDefinition的Resource定位、BeanDefinition的载入、BeanDefinition的注册。
-	 * BeanDefinition的载入和bean的依赖注入是两个独立的过程，依赖注入一般发生在 应用第一次通过getBean()方法从容器获取bean时。
+	 * BeanDefinition的载入和bean的依赖注入是两个独立的过程，依赖注入一般发生在 应用第一次调用getBean()时。
 	 * 
-	 * 另外需要注意的是，IoC容器有一个预实例化的配置（即，将AbstractBeanDefinition中的lazyInit属性设为true），使用户可以对容器的初始化
-	 * 过程做一个微小的调控，lazyInit设为true的bean将在容器初始化时进行依赖注入，而不会等到getBean()方法调用时才进行
+	 * 另外需要注意的是，IoC容器有一个预实例化的配置（将配置文件中bean的lazyInit属性设为true，
+	 * 此bean将在容器初始化时进行依赖注入，而不会等到getBean()方法调用时才进行
 	 */
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
-			//调用容器准备刷新的方法，获取容器的当前时间，同时给容器设置同步标识
+			//准备刷新，获取容器的当前时间，同时给容器设置同步标识
 			prepareRefresh();
 
 			//告诉子类启动refreshBeanFactory()方法，Bean定义资源文件的载入从子类的refreshBeanFactory()方法启动开始
@@ -510,6 +510,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		this.startupDate = System.currentTimeMillis();
 
 		synchronized (this.activeMonitor) {
+			// active标记了当前context是否处于活动状态
 			this.active = true;
 		}
 
@@ -517,7 +518,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			logger.info("Refreshing " + this);
 		}
 
-		// Initialize any placeholder property sources in the context environment
+		// 在上下文环境中初始化任何占位符属性资源
 		initPropertySources();
 
 		// Validate that all properties marked as required are resolvable

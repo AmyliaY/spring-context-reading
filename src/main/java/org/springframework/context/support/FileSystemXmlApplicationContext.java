@@ -77,7 +77,7 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
 		this(configLocations, true, null);
 	}
 
-	//在定义多个BeanDefinition所在的文件路径 的同时，还能指定自己的双亲IoC容器
+	//在定义多个BeanDefinition所在的文件路径 的同时，还能指定自己的双亲IoC容器(父容器的作用是什么？从子容器中get不到的bean会去父容器找？)
 	public FileSystemXmlApplicationContext(String[] configLocations, ApplicationContext parent) throws BeansException {
 		this(configLocations, true, parent);
 	}
@@ -88,10 +88,6 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
 
 	/**
 	 * 如果应用直接使用FileSystemXmlApplicationContext进行实例化，则都会进到这个构造方法中来
-	 * @param configLocations
-	 * @param refresh
-	 * @param parent
-	 * @throws BeansException
 	 */
 	public FileSystemXmlApplicationContext(String[] configLocations, boolean refresh, ApplicationContext parent)
 			throws BeansException {

@@ -76,7 +76,7 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 
 
 	//在这里完成了容器的初始化，并赋值给自己private的beanFactory属性，为下一步调用做准备
-	//从父类AbstractApplicationContext继承的抽线方法，自己做了实现
+	//从父类AbstractApplicationContext继承的抽象方法，自己做了实现
 	@Override
 	protected final void refreshBeanFactory() throws BeansException {
 		//如果已经建立了IoC容器，则销毁并关闭容器
@@ -88,9 +88,9 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 			//创建IoC容器，DefaultListableBeanFactory类实现了ConfigurableListableBeanFactory接口
 			DefaultListableBeanFactory beanFactory = createBeanFactory();
 			beanFactory.setSerializationId(getId());
-			//对IoC容器进行定制化，如设置启动参数，开启注解的自动装配等
+			//定制化IoC容器，如设置启动参数，开启注解的自动装配等
 			customizeBeanFactory(beanFactory);
-			//载入BeanDefinition，这里又使用了一个委派模式，在当前类中只定义了抽象的loadBeanDefinitions方法，具体的实现调用子类容器
+			//载入BeanDefinition，这里又使用了一个委派模式，在当前类定义此抽象方法，子类容器具体实现
 			loadBeanDefinitions(beanFactory);
 			synchronized (this.beanFactoryMonitor) {
 				//给自己的属性赋值
